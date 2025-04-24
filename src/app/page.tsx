@@ -59,6 +59,25 @@ export default function Home() {
   const handleClearSearch = () => {
     setSearchInput('');
     setSearchQuery('');
+    setSelectedDate(null);
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+    setIsDatePickerOpen(false);
+  };
+
+  const clearDateFilter = () => {
+    setSelectedDate(null);
+  };
+
+  // リセットボタンのクリックハンドラ
+  const handleReset = () => {
+    setSearchQuery('');
+    setSearchInput('');
+    setSelectedDate(null);
+    // 全ての投稿を再取得
+    fetchPosts();
   };
 
   useEffect(() => {
@@ -107,7 +126,7 @@ export default function Home() {
       
       console.log('Search query:', query);
       
-      // 検索クエリをそのまま使用（正規化はサーバー側で行う）
+      // 検索クエリが空の場合は全ての投稿を取得
       const response = await fetch(`/api/posts${query ? `?q=${encodeURIComponent(query)}` : ''}`);
       if (!response.ok) throw new Error('Failed to fetch posts');
       const data = await response.json();
@@ -135,26 +154,6 @@ export default function Home() {
       return;
     }
     router.push(`/posts/${id}/edit`);
-  };
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-    setIsDatePickerOpen(false);
-    
-    // 日付が選択されたら、検索を実行
-    if (date) {
-      // 日付のみの検索の場合は、他の検索クエリをクリア
-      if (!searchQuery.trim()) {
-        setSearchQuery('');
-      }
-      // 検索を実行（useEffectで自動的に実行される）
-    }
-  };
-
-  const clearDateFilter = () => {
-    setSelectedDate(null);
-    // 日付フィルターをクリアしたら、検索を実行
-    // 検索を実行（useEffectで自動的に実行される）
   };
 
   const handleDelete = async (postId: string) => {
@@ -260,14 +259,12 @@ export default function Home() {
             >
               <FaCalendarAlt />
             </button>
-            {searchInput && (
-              <button
-                onClick={handleClearSearch}
-                className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
-            )}
+            <button
+              onClick={handleClearSearch}
+              className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
             {isDatePickerOpen && (
               <div className="absolute z-50 mt-1">
                 <DatePicker
@@ -277,15 +274,8 @@ export default function Home() {
                   dateFormat="yyyy/MM/dd"
                   placeholderText="日付を選択"
                   className="border rounded-lg shadow-lg"
+                  popperClassName="datepicker-popper"
                 />
-                {selectedDate && (
-                  <button
-                    onClick={clearDateFilter}
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                  >
-                    ✕
-                  </button>
-                )}
               </div>
             )}
           </div>
@@ -297,11 +287,7 @@ export default function Home() {
           </button>
           {(searchQuery || selectedDate) && (
             <button
-              onClick={() => {
-                setSearchQuery('');
-                setSearchInput('');
-                setSelectedDate(null);
-              }}
+              onClick={handleReset}
               className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 whitespace-nowrap"
             >
               リセット
