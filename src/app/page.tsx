@@ -341,7 +341,7 @@ export default function Home() {
                       場所
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
-                      公式HP
+                      投稿者公式HP
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
                       コメント
