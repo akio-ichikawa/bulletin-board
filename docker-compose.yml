@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bulletin_board
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  app:
+    build:
+      context: .
+      target: development
+    container_name: bulletin-board-app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/bulletin_board
+      - NEXTAUTH_SECRET=TClfxO35YkOLpAmRDgYqjVZLHx8GWYq0NDh0eZQHdCU=
+      - NEXTAUTH_URL=http://localhost:3001
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge 
