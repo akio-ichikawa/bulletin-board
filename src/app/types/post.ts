@@ -5,6 +5,7 @@ export interface Post {
   date: string;
   time: string;
   location: string;
+  prefecture: string;
   website?: string;
   comment?: string;
   userId: string;

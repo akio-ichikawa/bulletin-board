@@ -18,6 +18,7 @@ interface Post {
   date: string;
   time: string;
   location: string;
+  prefecture: string;
   website?: string;
   comment?: string;
   userId: string;
@@ -337,6 +338,9 @@ export default function Home() {
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[80px] bg-gray-50">
                       時間
                     </th>
+                    <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[100px] bg-gray-50">
+                      都道府県
+                    </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
                       場所
                     </th>
@@ -371,6 +375,9 @@ export default function Home() {
                         <div className="text-sm text-gray-900">{post.time}</div>
                       </td>
                       <td className="px-4 sm:px-6 py-2 sm:py-3 whitespace-nowrap border">
+                        <div className="text-sm text-gray-900">{post.prefecture}</div>
+                      </td>
+                      <td className="px-4 sm:px-6 py-2 sm:py-3 whitespace-nowrap border">
                         <div className="text-sm text-gray-900">{post.location}</div>
                       </td>
                       <td className="px-4 sm:px-6 py-2 sm:py-3 whitespace-nowrap border">
@@ -401,7 +408,7 @@ export default function Home() {
                         >
                           詳細
                         </button>
-                        {session?.user?.email === post.user?.email && (
+                        {currentUserId === post.userId && (
                           <>
                             <Link
                               href={`/posts/${post.id}/edit`}
@@ -438,13 +445,24 @@ export default function Home() {
                       <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
                         {post.eventName}
                       </h2>
-                      {session?.user?.email === post.user?.email && (
-                        <Link
-                          href={`/posts/${post.id}/edit`}
-                          className="text-blue-500 hover:text-blue-700"
-                        >
-                          編集
-                        </Link>
+                      {currentUserId === post.userId && (
+                        <div className="flex space-x-2">
+                          <Link
+                            href={`/posts/${post.id}/edit`}
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            編集
+                          </Link>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(post.id);
+                            }}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            削除
+                          </button>
+                        </div>
                       )}
                     </div>
                     <div className="space-y-2">
@@ -467,6 +485,12 @@ export default function Home() {
                           時間:
                         </span>
                         <span className="ml-2 text-gray-900">{post.time}</span>
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-gray-500">
+                          都道府県:
+                        </span>
+                        <span className="ml-2 text-gray-900">{post.prefecture}</span>
                       </div>
                       <div>
                         <span className="text-sm font-medium text-gray-500">
@@ -501,13 +525,24 @@ export default function Home() {
                       )}
                     </div>
                     <div className="mt-4">
-                      {session?.user?.email === post.user?.email && (
-                        <button
-                          onClick={() => handleDelete(post.id)}
-                          className="text-red-500 hover:text-red-700"
-                        >
-                          削除
-                        </button>
+                      {currentUserId === post.userId && (
+                        <div className="flex space-x-2">
+                          <Link
+                            href={`/posts/${post.id}/edit`}
+                            className="text-indigo-600 hover:text-indigo-900"
+                          >
+                            編集
+                          </Link>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDelete(post.id);
+                            }}
+                            className="text-red-600 hover:text-red-900"
+                          >
+                            削除
+                          </button>
+                        </div>
                       )}
                     </div>
                   </div>

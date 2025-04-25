@@ -27,13 +27,14 @@ model Post {
   date       String
   time       String
   location   String
+  prefecture String   @default("東京都")
   website    String?
   comment    String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   userId     String
   user       User     @relation(fields: [userId], references: [id])
-}
+} 
 
 model Contact {
   id        String   @id @default(cuid())
@@ -42,4 +43,9 @@ model Contact {
   subject   String
   message   String
   createdAt DateTime @default(now())
+} 
+
+model Prefecture {
+  id   Int    @id @default(autoincrement())
+  name String @unique
 } 

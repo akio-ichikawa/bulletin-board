@@ -23,32 +23,32 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
-          const user = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({
             where: { email: credentials.email },
-          });
+        });
 
-          if (!user) {
-            throw new Error('ユーザーが見つかりません');
-          }
+        if (!user) {
+          throw new Error('ユーザーが見つかりません');
+        }
 
           const isPasswordValid = await bcrypt.compare(
             credentials.password,
             user.password
           );
 
-          if (!isPasswordValid) {
-            throw new Error('パスワードが正しくありません');
-          }
+        if (!isPasswordValid) {
+          throw new Error('パスワードが正しくありません');
+        }
 
-          return {
+        return {
             id: user.id,
-            email: user.email,
+          email: user.email,
             name: user.name,
-          };
+        };
         } catch (error) {
           console.error('Authentication error:', error);
           throw error;
-        }
+      }
       },
     }),
   ],
@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id as string;
       }
       return session;
-    },
+  },
   },
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',

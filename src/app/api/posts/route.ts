@@ -67,12 +67,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { eventName, artistName, date, time, location, website, comment } = await request.json();
+    const { eventName, artistName, date, time, location, prefecture, website, comment } = await request.json();
     
     // 必須フィールドのバリデーション
-    if (!eventName || !date || !time || !location) {
+    if (!eventName || !date || !time || !location || !prefecture) {
       return NextResponse.json(
-        { error: 'イベント名、日付、時間、場所は必須です' },
+        { error: 'イベント名、日付、時間、場所、都道府県は必須です' },
         { status: 400 }
       );
     }
@@ -100,9 +100,10 @@ export async function POST(request: Request) {
         date,
         time,
         location,
+        prefecture,
         website: website || '',
         comment: comment || '',
-        userId: user.id
+        userId: user.id,
       }
     });
 
@@ -115,141 +116,49 @@ export async function POST(request: Request) {
 
 // GETリクエストの処理
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const query = searchParams.get('q');
-
   try {
-    // 過去の投稿を削除
-    await deletePastPosts();
-
-    // 検索クエリを正規化
-    const normalizedQuery = query ? normalizeText(query) : null;
-    console.log('Normalized query:', normalizedQuery);
-
+    // URLからクエリパラメータを取得
+    const { searchParams } = new URL(request.url);
+    const query = searchParams.get('q');
+    
     // 検索条件を構築
-    let whereCondition = undefined;
-    let dateStr = null;
+    let whereClause: any = {};
     
-    // 今日の日付を取得
-    const today = new Date().toISOString().split('T')[0];
-    
-    // 基本の検索条件に今日以降の日付を追加
-    whereCondition = {
-      date: {
-        gte: today
-      }
-    };
-    
-    if (normalizedQuery) {
-      // 日付検索のための処理
-      const dateRegex = /(\d{4}-\d{2}-\d{2})/;
-      const dateMatch = normalizedQuery.match(dateRegex);
-      dateStr = dateMatch ? dateMatch[1] : null;
+    if (query) {
+      // 検索クエリを正規化
+      const normalizedQuery = normalizeText(query);
       
-      // テキスト検索用のクエリ（日付部分を除去）
-      const textQuery = dateStr 
-        ? normalizedQuery.replace(dateStr, '').trim()
-        : normalizedQuery;
-
-      // 検索条件の構築
-      const conditions = [];
-
-      // 日付条件の追加
-      if (dateStr) {
-        conditions.push({
-          date: dateStr
-        });
-      }
-
-      // テキスト検索条件の追加
-      if (textQuery) {
-        conditions.push({
-          OR: [
-            {
-              eventName: {
-                contains: textQuery,
-              },
-            },
-            {
-              artistName: {
-                contains: textQuery,
-              },
-            },
-            {
-              location: {
-                contains: textQuery,
-              },
-            },
-            {
-              comment: {
-                contains: textQuery,
-              },
-            },
-          ],
-        });
-      }
-
-      // 条件が存在する場合、ANDで結合
-      if (conditions.length > 0) {
-        whereCondition = {
-          AND: [
-            { date: { gte: today } },
-            ...conditions
-          ]
-        };
-      }
+      // 検索条件を設定
+      whereClause = {
+        OR: [
+          { eventName: { contains: query, mode: 'insensitive' } },
+          { artistName: { contains: query, mode: 'insensitive' } },
+          { location: { contains: query, mode: 'insensitive' } },
+          { prefecture: { contains: query, mode: 'insensitive' } },
+          { comment: { contains: query, mode: 'insensitive' } },
+          { date: { equals: query } } // 日付での検索もサポート
+        ]
+      };
     }
-
-    console.log('Where condition:', JSON.stringify(whereCondition));
-
+    
     // 投稿を取得
     const posts = await prisma.post.findMany({
-      where: whereCondition,
-      orderBy: [
-        {
-          date: 'asc',
-        },
-        {
-          time: 'asc',
-        }
-      ],
+      where: whereClause,
+      orderBy: {
+        date: 'asc'
+      },
       include: {
         user: {
           select: {
             id: true,
             email: true,
-          },
-        },
-      },
+            name: true
+          }
+        }
+      }
     });
 
-    // より柔軟な検索を実装
-    const filteredPosts = normalizedQuery && !dateStr
-      ? posts.filter((post: any) => {
-          // 検索対象のテキストを正規化
-          const eventName = normalizeText(post.eventName);
-          const artistName = normalizeText(post.artistName || '');
-          const location = normalizeText(post.location);
-          const comment = normalizeText(post.comment || '');
-          
-          // 検索クエリを空白で分割
-          const queryParts = normalizedQuery.split(/\s+/).filter(part => part.length > 0);
-          
-          // 各部分が検索対象に含まれているかチェック
-          return queryParts.every(part => {
-            // 部分一致で検索
-            return (
-              eventName.includes(part) ||
-              artistName.includes(part) ||
-              location.includes(part) ||
-              comment.includes(part)
-            );
-          });
-        })
-      : posts;
-
-    console.log(`Found ${filteredPosts.length} posts`);
-    return NextResponse.json(filteredPosts);
+    return NextResponse.json(posts);
   } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json(

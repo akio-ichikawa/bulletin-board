@@ -75,8 +75,12 @@ export default function PostModal({ post, isOpen, onClose }: PostModalProps) {
               <p className="mt-1 text-gray-900">{post.time}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">場所</h3>
+              <h3 className="text-sm font-medium text-gray-500">開催場所</h3>
               <p className="mt-1 text-gray-900">{post.location}</p>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-gray-500">開催都道府県</h3>
+              <p className="mt-1 text-gray-900">{post.prefecture}</p>
             </div>
           </div>
 

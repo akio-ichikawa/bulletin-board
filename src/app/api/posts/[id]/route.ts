@@ -33,7 +33,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { eventName, artistName, date, time, location, website, comment } = await request.json();
+    const { eventName, artistName, date, time, location, prefecture, website, comment } = await request.json();
 
     const post = await prisma.post.update({
       where: { id: params.id },
@@ -43,6 +43,7 @@ export async function PUT(
         date, 
         time, 
         location, 
+        prefecture,
         website, 
         comment 
       },
