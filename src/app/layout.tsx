@@ -8,7 +8,7 @@ import Footer from './components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'イベント掲示板',
+  title: 'わちゃわちゃイベント掲示板',
   description: 'イベント情報を共有する掲示板です',
   icons: {
     icon: '/favicon.ico',

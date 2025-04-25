@@ -86,7 +86,7 @@ export default function PostModal({ post, isOpen, onClose }: PostModalProps) {
 
           {post.website && (
             <div>
-              <h3 className="text-sm font-medium text-gray-500">公式ウェブサイト</h3>
+              <h3 className="text-sm font-medium text-gray-500">投稿者公式サイト</h3>
               <a
                 href={post.website}
                 target="_blank"

@@ -323,7 +323,7 @@ export default function NewPost() {
 
         <div className="mb-4">
           <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
-            公式サイト
+            投稿者公式サイト
           </label>
           <input
             type="url"

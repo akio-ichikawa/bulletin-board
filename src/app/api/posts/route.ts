@@ -59,6 +59,13 @@ async function deletePastPosts() {
   });
 }
 
+// 投稿が期限切れかどうかをチェックする関数
+function isPostExpired(post: any) {
+  const postDateTime = new Date(`${post.date}T${post.time}`);
+  const now = new Date();
+  return postDateTime < now;
+}
+
 // POSTリクエストの処理
 export async function POST(request: Request) {
   try {
@@ -158,7 +165,10 @@ export async function GET(request: Request) {
       }
     });
 
-    return NextResponse.json(posts);
+    // 期限切れの投稿を除外
+    const activePosts = posts.filter(post => !isPostExpired(post));
+
+    return NextResponse.json(activePosts);
   } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json(

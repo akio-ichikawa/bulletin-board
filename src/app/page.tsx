@@ -44,6 +44,12 @@ export default function Home() {
   const [searchInput, setSearchInput] = useState('');
   const [isContactFormOpen, setIsContactFormOpen] = useState(false);
 
+  // 投稿が期限切れかどうかをチェックする関数
+  const isPostExpired = (post: Post) => {
+    const postDateTime = new Date(`${post.date}T${post.time}`);
+    return postDateTime < new Date();
+  };
+
   // 検索ボタンクリック時の処理
   const handleSearch = () => {
     setSearchQuery(searchInput);
@@ -131,7 +137,10 @@ export default function Home() {
       const response = await fetch(`/api/posts${query ? `?q=${encodeURIComponent(query)}` : ''}`);
       if (!response.ok) throw new Error('Failed to fetch posts');
       const data = await response.json();
-      setPosts(data);
+      
+      // 期限切れの投稿を除外
+      const activePosts = data.filter((post: Post) => !isPostExpired(post));
+      setPosts(activePosts);
     } catch (error) {
       console.error('Error fetching posts:', error);
     } finally {
@@ -324,7 +333,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="h-[400px] sm:h-[500px] border border-gray-200 rounded-lg bg-white shadow-sm">
+      <div className="post-container max-h-[500px] overflow-y-auto">
         {viewMode === 'table' ? (
           <div className="h-full overflow-hidden flex flex-col">
             <div className="overflow-x-auto">

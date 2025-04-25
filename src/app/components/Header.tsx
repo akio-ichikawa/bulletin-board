@@ -44,9 +44,7 @@ export default function Header() {
         {/* モバイル表示用の2段ヘッダー */}
         <div className="flex flex-col sm:hidden py-2">
           <div className="flex items-center justify-between mb-2">
-            <Link href="/" className="text-xl font-bold text-gray-800">
-              わちゃわちゃイベント掲示板
-            </Link>
+            {/* タイトルを削除 */}
           </div>
           <div className="flex items-center justify-between">
             <button
