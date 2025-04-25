@@ -20,7 +20,7 @@ env_variables:
   EMAIL_TO: "akio5451@gmail.com"
 
 beta_settings:
-  cloud_sql_instances: even-dragon-456911-e6:asia-northeast1:bulletin-board-db
+  cloud_sql_instances: bulletin-board-db
 
 handlers:
   - url: /.*

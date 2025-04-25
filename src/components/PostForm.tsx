@@ -294,47 +294,42 @@ export default function PostForm() {
         )}
       </div>
 
-      <div>
-        <label htmlFor="time" className="block text-sm font-medium text-gray-700">
+      <div className="mb-4">
+        <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">
           時間 *
         </label>
         <input
           type="time"
           id="time"
+          name="time"
+          required
           value={formState.time}
           onChange={(e) => handleInputChange('time', e.target.value)}
-          onFocus={() => handleFocus('time')}
-          required
-          aria-required="true"
-          aria-invalid={!!fieldErrors.time}
-          aria-describedby={fieldErrors.time ? 'time-error' : undefined}
-          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${
-            fieldErrors.time ? 'border-red-300' : 'border-gray-300'
-          } ${focusedField === 'time' ? 'ring-2 ring-indigo-500' : ''}`}
+          autoComplete="new-password"
+          spellCheck="false"
+          autoCorrect="off"
+          className={`w-full px-4 py-2 border rounded-lg ${
+            fieldErrors.time ? 'border-red-500' : 'border-gray-300'
+          }`}
         />
         {fieldErrors.time && (
-          <p id="time-error" className="mt-1 text-sm text-red-600" role="alert">
-            {fieldErrors.time}
-          </p>
+          <p className="mt-1 text-sm text-red-500">{fieldErrors.time}</p>
         )}
       </div>
 
-      <div>
-        <label htmlFor="prefecture" className="block text-sm font-medium text-gray-700">
-          都道府県 *
+      <div className="mb-4">
+        <label htmlFor="prefecture" className="block text-sm font-medium text-gray-700 mb-1">
+          開催都道府県 *
         </label>
         <select
           id="prefecture"
+          name="prefecture"
+          required
           value={formState.prefecture}
           onChange={(e) => handleInputChange('prefecture', e.target.value)}
-          onFocus={() => handleFocus('prefecture')}
-          required
-          aria-required="true"
-          aria-invalid={!!fieldErrors.prefecture}
-          aria-describedby={fieldErrors.prefecture ? 'prefecture-error' : undefined}
-          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${
-            fieldErrors.prefecture ? 'border-red-300' : 'border-gray-300'
-          } ${focusedField === 'prefecture' ? 'ring-2 ring-indigo-500' : ''}`}
+          className={`w-full px-4 py-2 border rounded-lg ${
+            fieldErrors.prefecture ? 'border-red-500' : 'border-gray-300'
+          }`}
         >
           <option value="">選択してください</option>
           <option value="北海道">北海道</option>
@@ -386,36 +381,30 @@ export default function PostForm() {
           <option value="沖縄県">沖縄県</option>
         </select>
         {fieldErrors.prefecture && (
-          <p id="prefecture-error" className="mt-1 text-sm text-red-600" role="alert">
-            {fieldErrors.prefecture}
-          </p>
+          <p className="mt-1 text-sm text-red-500">{fieldErrors.prefecture}</p>
         )}
       </div>
 
-      <div>
-        <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-          場所 *
+      <div className="mb-4">
+        <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+          開催場所 *
         </label>
         <input
           type="text"
           id="location"
+          name="location"
+          required
           value={formState.location}
           onChange={(e) => handleInputChange('location', e.target.value)}
-          onFocus={() => handleFocus('location')}
-          required
-          maxLength={200}
-          placeholder="例: 東京ドーム"
-          aria-required="true"
-          aria-invalid={!!fieldErrors.location}
-          aria-describedby={fieldErrors.location ? 'location-error' : undefined}
-          className={`mt-1 block w-full rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 ${
-            fieldErrors.location ? 'border-red-300' : 'border-gray-300'
-          } ${focusedField === 'location' ? 'ring-2 ring-indigo-500' : ''}`}
+          autoComplete="new-password"
+          spellCheck="false"
+          autoCorrect="off"
+          className={`w-full px-4 py-2 border rounded-lg ${
+            fieldErrors.location ? 'border-red-500' : 'border-gray-300'
+          }`}
         />
         {fieldErrors.location && (
-          <p id="location-error" className="mt-1 text-sm text-red-600" role="alert">
-            {fieldErrors.location}
-          </p>
+          <p className="mt-1 text-sm text-red-500">{fieldErrors.location}</p>
         )}
       </div>
 

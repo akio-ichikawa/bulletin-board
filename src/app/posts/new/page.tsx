@@ -138,6 +138,21 @@ export default function NewPost() {
         [name]: '',
       }));
     }
+
+    // 日付が変更された場合、過去の日付かチェック
+    if (name === 'date' && value) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const selectedDate = new Date(value);
+      selectedDate.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        setErrors((prev) => ({
+          ...prev,
+          date: '過去の日付は選択できません',
+        }));
+      }
+    }
   };
 
   return (
@@ -219,28 +234,8 @@ export default function NewPost() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
-            場所 *
-          </label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            required
-            value={formData.location}
-            onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg ${
-              errors.location ? 'border-red-500' : 'border-gray-300'
-            }`}
-          />
-          {errors.location && (
-            <p className="mt-1 text-sm text-red-500">{errors.location}</p>
-          )}
-        </div>
-
-        <div className="mb-4">
           <label htmlFor="prefecture" className="block text-sm font-medium text-gray-700 mb-1">
-            都道府県 *
+            開催都道府県 *
           </label>
           <select
             id="prefecture"
@@ -303,6 +298,26 @@ export default function NewPost() {
           </select>
           {errors.prefecture && (
             <p className="mt-1 text-sm text-red-500">{errors.prefecture}</p>
+          )}
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+            開催場所 *
+          </label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            required
+            value={formData.location}
+            onChange={handleChange}
+            className={`w-full px-4 py-2 border rounded-lg ${
+              errors.location ? 'border-red-500' : 'border-gray-300'
+            }`}
+          />
+          {errors.location && (
+            <p className="mt-1 text-sm text-red-500">{errors.location}</p>
           )}
         </div>
 

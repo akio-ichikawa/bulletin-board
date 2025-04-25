@@ -200,28 +200,8 @@ export default function EditPost({ params }: { params: { id: string } }) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
-            場所 *
-          </label>
-          <input
-            type="text"
-            id="location"
-            name="location"
-            required
-            value={post.location}
-            onChange={(e) => setPost({ ...post, location: e.target.value })}
-            autoComplete="new-password"
-            spellCheck="false"
-            autoCorrect="off"
-            className={`w-full px-4 py-2 border rounded-lg ${
-              error ? 'border-red-500' : 'border-gray-300'
-            }`}
-          />
-        </div>
-
-        <div className="mb-4">
           <label htmlFor="prefecture" className="block text-sm font-medium text-gray-700 mb-1">
-            都道府県 *
+            開催都道府県 *
           </label>
           <select
             id="prefecture"
@@ -282,6 +262,26 @@ export default function EditPost({ params }: { params: { id: string } }) {
             <option value="鹿児島県">鹿児島県</option>
             <option value="沖縄県">沖縄県</option>
           </select>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">
+            開催場所 *
+          </label>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            required
+            value={post.location}
+            onChange={(e) => setPost({ ...post, location: e.target.value })}
+            autoComplete="new-password"
+            spellCheck="false"
+            autoCorrect="off"
+            className={`w-full px-4 py-2 border rounded-lg ${
+              error ? 'border-red-500' : 'border-gray-300'
+            }`}
+          />
         </div>
 
         <div className="mb-4">

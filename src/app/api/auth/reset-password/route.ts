@@ -2,16 +2,11 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import { sendResetPasswordEmail } from '@/lib/email';
 
 // パスワードリセットトークンの生成
 const generateResetToken = () => {
   return crypto.randomBytes(32).toString('hex');
-};
-
-// パスワードリセットメールの送信（実際のメール送信は実装が必要）
-const sendResetEmail = async (email: string, token: string) => {
-  // ここにメール送信の実装を追加
-  console.log(`Reset password email sent to ${email} with token ${token}`);
 };
 
 // パスワードリセットリクエストの処理
@@ -52,7 +47,7 @@ export async function POST(request: Request) {
     });
 
     // リセットメールの送信
-    await sendResetEmail(email, resetToken);
+    await sendResetPasswordEmail(email, resetToken);
 
     return NextResponse.json(
       { message: 'パスワードリセットのメールを送信しました' },

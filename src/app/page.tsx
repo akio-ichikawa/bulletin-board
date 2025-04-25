@@ -218,11 +218,11 @@ export default function Home() {
 
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 bg-gray-50">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 mt-4">イベント一覧</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 mt-4">掲示板</h1>
       
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
         <p className="text-yellow-800 text-xs sm:text-sm">
-          ※ 掲載された情報に関して、当サイトは一切の責任を負いません。イベントの詳細については、必ず公式サイトでご確認ください。
+          ※ 掲載された情報に関して、当サイトは一切の責任を負いません。詳細については、必ず公式サイトでご確認ください。
         </p>
       </div>
 
@@ -235,7 +235,7 @@ export default function Home() {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
             </svg>
-            <span>新規イベントを投稿</span>
+            <span>新規投稿</span>
           </button>
         )}
       </div>
@@ -252,7 +252,7 @@ export default function Home() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-full pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-64 pl-9 sm:pl-10 pr-4 py-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               onClick={() => setIsDatePickerOpen(!isDatePickerOpen)}
@@ -327,10 +327,10 @@ export default function Home() {
                 <thead className="bg-gray-50 sticky top-0 z-10">
                   <tr>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
-                      イベント名
+                      タイトル
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
-                      アーティスト
+                      名前
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[100px] bg-gray-50">
                       日付
@@ -339,10 +339,10 @@ export default function Home() {
                       時間
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[100px] bg-gray-50">
-                      都道府県
+                      開催都道府県
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
-                      場所
+                      開催場所
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
                       投稿者公式HP
@@ -488,13 +488,13 @@ export default function Home() {
                       </div>
                       <div>
                         <span className="text-sm font-medium text-gray-500">
-                          都道府県:
+                          開催都道府県:
                         </span>
                         <span className="ml-2 text-gray-900">{post.prefecture}</span>
                       </div>
                       <div>
                         <span className="text-sm font-medium text-gray-500">
-                          場所:
+                          開催場所:
                         </span>
                         <span className="ml-2 text-gray-900">
                           {post.location}
