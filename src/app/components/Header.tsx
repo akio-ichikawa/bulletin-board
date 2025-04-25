@@ -45,7 +45,7 @@ export default function Header() {
         <div className="flex flex-col sm:hidden py-2">
           <div className="flex items-center justify-between mb-2">
             <Link href="/" className="text-xl font-bold text-gray-800">
-              イベント掲示板
+              わちゃわちゃイベント掲示板
             </Link>
           </div>
           <div className="flex items-center justify-between">
@@ -92,7 +92,7 @@ export default function Header() {
         {/* デスクトップ表示用の1段ヘッダー */}
         <div className="hidden sm:flex items-center justify-between h-16">
           <Link href="/" className="text-xl font-bold text-gray-800">
-            イベント掲示板
+            わちゃわちゃイベント掲示板
           </Link>
           
           <div className="flex items-center space-x-4">
