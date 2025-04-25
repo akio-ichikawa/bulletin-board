@@ -488,14 +488,14 @@ export default function Home() {
                       </div>
                       {post.website && (
                         <div>
-                          <span className="text-sm font-medium text-gray-500">
+                          <div className="text-sm font-medium text-gray-500">
                             投稿者公式サイト:
-                          </span>
+                          </div>
                           <a
                             href={post.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="ml-2 text-blue-500 hover:text-blue-700"
+                            className="text-blue-500 hover:text-blue-700 break-all"
                           >
                             {post.website}
                           </a>
