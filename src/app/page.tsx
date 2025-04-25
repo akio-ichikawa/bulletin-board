@@ -445,25 +445,6 @@ export default function Home() {
                       <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
                         {post.eventName}
                       </h2>
-                      {currentUserId === post.userId && (
-                        <div className="flex space-x-2">
-                          <Link
-                            href={`/posts/${post.id}/edit`}
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            編集
-                          </Link>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(post.id);
-                            }}
-                            className="text-red-600 hover:text-red-900"
-                          >
-                            削除
-                          </button>
-                        </div>
-                      )}
                     </div>
                     <div className="space-y-2">
                       <div>
