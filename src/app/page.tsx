@@ -219,7 +219,8 @@ export default function Home() {
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8 break-words whitespace-normal">わちゃわちゃイベント掲示板</h1>
+        <h1 className="text-3xl font-bold text-center mb-8 whitespace-pre-line sm:whitespace-normal">わちゃわちゃイベント
+掲示板</h1>
       </div>
       
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
