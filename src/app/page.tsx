@@ -218,7 +218,9 @@ export default function Home() {
 
   return (
     <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 bg-gray-50">
-      <h1 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8 mt-4">掲示板</h1>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 className="text-3xl font-bold text-center mb-8 break-words whitespace-normal">わちゃわちゃイベント掲示板</h1>
+      </div>
       
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
         <p className="text-yellow-800 text-xs sm:text-sm">
@@ -345,7 +347,7 @@ export default function Home() {
                       開催場所
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
-                      投稿者公式HP
+                      投稿者公式サイト
                     </th>
                     <th className="px-4 sm:px-6 py-2 sm:py-3 border-b border-r text-center text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap min-w-[120px] bg-gray-50">
                       コメント
@@ -484,7 +486,7 @@ export default function Home() {
                       {post.website && (
                         <div>
                           <span className="text-sm font-medium text-gray-500">
-                            ウェブサイト:
+                            投稿者公式サイト:
                           </span>
                           <a
                             href={post.website}
