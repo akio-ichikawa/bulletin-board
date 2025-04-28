@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -49,9 +50,14 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div>
+        <div className="text-center">
+          <h1 className="text-lg sm:text-3xl font-bold mb-4 whitespace-nowrap">
+            <Link href="/" className="text-blue-600 hover:text-blue-800">
+              わちゃわちゃイベント掲示板
+            </Link>
+          </h1>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             新規登録
           </h2>
